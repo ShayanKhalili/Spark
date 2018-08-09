@@ -1,0 +1,9 @@
+C:\Users\Shayan\Documents\Work\Spark\Search Engine\bin\Debug\netcoreapp1.1\Search Engine.deps.json
+C:\Users\Shayan\Documents\Work\Spark\Search Engine\bin\Debug\netcoreapp1.1\Search Engine.runtimeconfig.json
+C:\Users\Shayan\Documents\Work\Spark\Search Engine\bin\Debug\netcoreapp1.1\Search Engine.runtimeconfig.dev.json
+C:\Users\Shayan\Documents\Work\Spark\Search Engine\bin\Debug\netcoreapp1.1\Search Engine.dll
+C:\Users\Shayan\Documents\Work\Spark\Search Engine\bin\Debug\netcoreapp1.1\Search Engine.pdb
+C:\Users\Shayan\Documents\Work\Spark\Search Engine\obj\Debug\netcoreapp1.1\Search Engine.csproj.CoreCompileInputs.cache
+C:\Users\Shayan\Documents\Work\Spark\Search Engine\obj\Debug\netcoreapp1.1\Search Engine.AssemblyInfo.cs
+C:\Users\Shayan\Documents\Work\Spark\Search Engine\obj\Debug\netcoreapp1.1\Search Engine.dll
+C:\Users\Shayan\Documents\Work\Spark\Search Engine\obj\Debug\netcoreapp1.1\Search Engine.pdb
