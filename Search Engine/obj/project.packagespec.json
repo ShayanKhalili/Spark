@@ -1,0 +1,30 @@
+﻿{
+  "version": "1.0.0",
+  "restore": {
+    "projectUniqueName": "C:\\Users\\Shayan\\Documents\\Work\\Spark\\Search Engine\\Search Engine.csproj",
+    "projectName": "Search Engine",
+    "projectPath": "C:\\Users\\Shayan\\Documents\\Work\\Spark\\Search Engine\\Search Engine.csproj",
+    "outputPath": "C:\\Users\\Shayan\\Documents\\Work\\Spark\\Search Engine\\obj\\",
+    "projectStyle": "PackageReference",
+    "originalTargetFrameworks": [
+      "netcoreapp1.1"
+    ],
+    "frameworks": {
+      "netcoreapp1.1": {
+        "projectReferences": {}
+      }
+    }
+  },
+  "frameworks": {
+    "netcoreapp1.1": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "suppressParent": "All",
+          "target": "Package",
+          "version": "[1.1.2, )",
+          "autoReferenced": true
+        }
+      }
+    }
+  }
+}
