@@ -7,3 +7,4 @@ C:\Users\Shayan\Documents\Work\Spark\Search Engine\obj\Debug\netcoreapp1.1\Searc
 C:\Users\Shayan\Documents\Work\Spark\Search Engine\obj\Debug\netcoreapp1.1\Search Engine.AssemblyInfo.cs
 C:\Users\Shayan\Documents\Work\Spark\Search Engine\obj\Debug\netcoreapp1.1\Search Engine.dll
 C:\Users\Shayan\Documents\Work\Spark\Search Engine\obj\Debug\netcoreapp1.1\Search Engine.pdb
+C:\Users\Shayan\Documents\Work\Spark\Search Engine\obj\Debug\netcoreapp1.1\Search Engine.csprojResolveAssemblyReference.cache
