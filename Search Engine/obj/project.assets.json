@@ -2,46 +2,61 @@
   "version": 3,
   "targets": {
     ".NETFramework,Version=v4.7": {},
-    ".NETFramework,Version=v4.7/win7-x86": {}
+    ".NETFramework,Version=v4.7/win": {},
+    ".NETFramework,Version=v4.7/win-x64": {},
+    ".NETFramework,Version=v4.7/win-x86": {}
   },
   "libraries": {},
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.7": []
   },
   "packageFolders": {
-    "C:\\Users\\Shayan\\.nuget\\packages\\": {}
+    "/Users/ShayanKhalili/.nuget/packages/": {},
+    "/usr/local/share/dotnet/sdk/NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Shayan\\Documents\\Work\\Spark (Rabbit Hold of Knowledge)\\Search Engine\\Search Engine.csproj",
+      "projectUniqueName": "/Users/ShayanKhalili/RiderProjects/Spark/Search Engine/Search Engine.csproj",
       "projectName": "Search Engine",
-      "projectPath": "C:\\Users\\Shayan\\Documents\\Work\\Spark (Rabbit Hold of Knowledge)\\Search Engine\\Search Engine.csproj",
-      "packagesPath": "C:\\Users\\Shayan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Shayan\\Documents\\Work\\Spark (Rabbit Hold of Knowledge)\\Search Engine\\obj\\",
+      "projectPath": "/Users/ShayanKhalili/RiderProjects/Spark/Search Engine/Search Engine.csproj",
+      "packagesPath": "/Users/ShayanKhalili/.nuget/packages/",
+      "outputPath": "/Users/ShayanKhalili/RiderProjects/Spark/Search Engine/obj/",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Shayan\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/ShayanKhalili/.config/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net47"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net47": {
           "projectReferences": {}
         }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
       }
     },
     "frameworks": {
       "net47": {}
     },
     "runtimes": {
-      "win7-x86": {
+      "win": {
+        "#import": []
+      },
+      "win-x64": {
+        "#import": []
+      },
+      "win-x86": {
         "#import": []
       }
     }

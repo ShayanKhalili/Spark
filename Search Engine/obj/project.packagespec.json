@@ -1,11 +1,14 @@
 ﻿{
   "version": "1.0.0",
   "restore": {
-    "projectUniqueName": "C:\\Users\\Shayan\\Documents\\Work\\Spark (Rabbit Hold of Knowledge)\\Search Engine\\Search Engine.csproj",
+    "projectUniqueName": "/Users/ShayanKhalili/RiderProjects/Spark/Search Engine/Search Engine.csproj",
     "projectName": "Search Engine",
-    "projectPath": "C:\\Users\\Shayan\\Documents\\Work\\Spark (Rabbit Hold of Knowledge)\\Search Engine\\Search Engine.csproj",
-    "outputPath": "C:\\Users\\Shayan\\Documents\\Work\\Spark (Rabbit Hold of Knowledge)\\Search Engine\\obj\\",
+    "projectPath": "/Users/ShayanKhalili/RiderProjects/Spark/Search Engine/Search Engine.csproj",
+    "outputPath": "/Users/ShayanKhalili/RiderProjects/Spark/Search Engine/obj/",
     "projectStyle": "PackageReference",
+    "fallbackFolders": [
+      "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+    ],
     "originalTargetFrameworks": [
       "net47"
     ],
@@ -13,13 +16,24 @@
       "net47": {
         "projectReferences": {}
       }
+    },
+    "warningProperties": {
+      "warnAsError": [
+        "NU1605"
+      ]
     }
   },
   "frameworks": {
     "net47": {}
   },
   "runtimes": {
-    "win7-x86": {
+    "win": {
+      "#import": []
+    },
+    "win-x64": {
+      "#import": []
+    },
+    "win-x86": {
       "#import": []
     }
   }

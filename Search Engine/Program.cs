@@ -10,13 +10,13 @@ using System.Web.Script.Serialization;
 namespace Search_Engine
 {
 
-    struct NewsStruct
+    struct Words
     {
         public string title;
         public string url;
         public int score;
 
-        public NewsStruct(string newsTitle, string newsUrl, int newsScore)
+        public Words(string newsTitle, string newsUrl, int newsScore)
         {
             title = newsTitle;
             url = newsUrl;
@@ -29,12 +29,12 @@ namespace Search_Engine
 
         static void Main(string[] args)
         {
-            List<NewsStruct> news = Search("cancer").Result;
+            List<Words> news = Search("cancer").Result;
             Console.WriteLine(news[0].title);
             Console.WriteLine();
         }
 
-        private static async Task<List<NewsStruct>> Search(string searchTerm)
+        private static async Task<List<Words>> Search(string searchTerm)
         {
             HttpClient client = new HttpClient();
             var loginPage = await client.GetStringAsync("https://www.altmetric.com/explorer/login");
@@ -61,9 +61,9 @@ namespace Search_Engine
             serializer.MaxJsonLength = Int32.MaxValue;
             dynamic papersDict = serializer.DeserializeObject(searchResults);
 
-            List<NewsStruct> newsList = new List<NewsStruct>();
+            List<Words> newsList = new List<Words>();
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 3; i++)
             {
                 string altId = papersDict["outputs"][i]["id"].ToString();
                 int score = papersDict["outputs"][i]["score"];
@@ -74,9 +74,21 @@ namespace Search_Engine
                 {
                     for (int j = 0; j < Math.Min(3, details["posts"]["news"].Length); j++)
                     {
-                        NewsStruct newsArticle = new NewsStruct(details["posts"]["news"][j]["title"], details["posts"]["news"][j]["url"], score);
+                        Words newsArticle = new Words(details["posts"]["news"][j]["title"], details["posts"]["news"][j]["url"], score);
                         newsList.Add(newsArticle);
                     }
+                }
+
+                if (details["posts"].ContainsKey("blogs"))
+                {
+                    Words blogPost = new Words(details["posts"]["blogs"][0]["title"], details["posts"]["blogs"][0]["url"], score);
+                    newsList.Add(blogPost);
+                }
+
+                if (details["posts"].ContainsKey("video"))
+                {
+                    Words video = new Words(details["posts"]["video"][0]["title"], details["posts"]["video"][0]["url"], score);
+                    newsList.Add(video);
                 }
             }
             
