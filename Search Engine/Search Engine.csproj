@@ -8,4 +8,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.Extensions" Condition="'$(TargetFramework)' == 'net47'" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="LanguageDetection" Version="1.2.0" />
+  </ItemGroup>
 </Project>

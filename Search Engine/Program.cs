@@ -1,20 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.PerformanceData;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using LanguageDetection;
 
 namespace Search_Engine
 {
 
-    struct Words
+    class Program
     {
-        public string title;
-        public string url;
-        public int score;
+
+        static void Main(string[] args)
+        {
+            string searchStr = Console.ReadLine(); 
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            List<Words> news = Words.Search(searchStr).Result;
+            stopwatch.Stop();
+            TimeSpan interval = stopwatch.Elapsed;
+            stopwatch.Reset();
+            for (int i = 0; i < news.Count; i++)
+            {
+                Console.WriteLine(news[i].title + " " + news[i].url);
+            }
+            Console.WriteLine(interval);
+        }
+    }
+    
+    class Words
+    {
+        public string title { get; set; }
+        public string url { get; set; }
+        public int score { get; set; }
 
         public Words(string newsTitle, string newsUrl, int newsScore)
         {
@@ -22,27 +45,19 @@ namespace Search_Engine
             url = newsUrl;
             score = newsScore;
         }
-    }
 
-    class Program
-    {
-
-        static void Main(string[] args)
+        public static async Task<List<Words>> Search(string searchTerm)
         {
-            List<Words> news = Search("cancer").Result;
-            Console.WriteLine(news[0].title);
-            Console.WriteLine();
-        }
-
-        private static async Task<List<Words>> Search(string searchTerm)
-        {
+            LanguageDetector detector = new LanguageDetector();
+            detector.AddAllLanguages();
+            
             HttpClient client = new HttpClient();
             var loginPage = await client.GetStringAsync("https://www.altmetric.com/explorer/login");
-            
+        
             Match matchObject = Regex.Match(loginPage, @"name=""authenticity_token"" value=""(?<key>.+)""");
             string token = string.Empty;
-            if(matchObject.Success) token = matchObject.Groups["key"].Value;
-            
+            if (matchObject.Success) token = matchObject.Groups["key"].Value;
+        
             Dictionary<string, string> formFields = new Dictionary<string, string>()
             {
                 {"email", "bigdata@stemfellowship.org"},
@@ -50,50 +65,130 @@ namespace Search_Engine
                 {"authenticity_token", token},
                 {"commit", "Sign in"}
             };
-
+        
             FormUrlEncodedContent content = new FormUrlEncodedContent(formFields);
             var response = await client.PostAsync("https://www.altmetric.com/explorer/login", content);
             var searchResults =
                 await client.GetStringAsync("https://www.altmetric.com/explorer/json_data/research_outputs?q=" + searchTerm +
                                       "&scope=all");
             
+            Console.WriteLine("A");
+        
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             serializer.MaxJsonLength = Int32.MaxValue;
             dynamic papersDict = serializer.DeserializeObject(searchResults);
-
+        
             List<Words> newsList = new List<Words>();
+        
+            List<Task<string>> taskList = new List<Task<string>>();
+            List<int> scoreList = new List<int>();
 
-            for (int i = 0; i < 3; i++)
+            if (papersDict["outputs"].Length == 0)
+            {
+                return newsList;
+            }
+            
+            Console.WriteLine("B");
+            
+            for (int i = 0; i < Math.Min(10, papersDict["outputs"].Length); i++)
             {
                 string altId = papersDict["outputs"][i]["id"].ToString();
                 int score = papersDict["outputs"][i]["score"];
-                var detailsText = await client.GetStringAsync("https://api.altmetric.com/v1/fetch/id/" + altId + "?key=1e25ee802e58e41ec820679c9ff92b09");
+                scoreList.Add(score);
+                taskList.Add(client.GetStringAsync("https://api.altmetric.com/v1/fetch/id/" + altId + "?key=1e25ee802e58e41ec820679c9ff92b09"));
+            }
+        
+            int counter = 0;
+            
+            while (taskList.Count > 0)
+            {
+                Console.WriteLine(counter);
+                Task<string> firstFinishedTask = await Task.WhenAny(taskList);
+                taskList.Remove(firstFinishedTask);
+                string detailsText = await firstFinishedTask;
+                
                 dynamic details = serializer.DeserializeObject(detailsText);
 
-                if (details["posts"].ContainsKey("news"))
+                if (details["posts"].ContainsKey("news") && details["posts"]["news"].Length > 0)
                 {
                     for (int j = 0; j < Math.Min(3, details["posts"]["news"].Length); j++)
                     {
-                        Words newsArticle = new Words(details["posts"]["news"][j]["title"], details["posts"]["news"][j]["url"], score);
-                        newsList.Add(newsArticle);
+                        if (details["posts"]["news"][j].ContainsKey("title") &&
+                            details["posts"]["news"][j].ContainsKey("url"))
+                        {
+                            string title = details["posts"]["news"][j]["title"];
+
+                            if (detector.Detect(title) == "en" && details["posts"]["news"][j]["url"] != null)
+                            {
+                                var request = new HttpRequestMessage(HttpMethod.Head, details["posts"]["news"][j]["url"]);
+                                try
+                                {
+                                    var validityResponse = await client.SendAsync(request);
+                                    if (validityResponse.IsSuccessStatusCode)
+                                    {
+                                        Words newsArticle = new Words(title, details["posts"]["news"][j]["url"], scoreList[counter]);
+                                        newsList.Add(newsArticle);
+                                    }
+                                }
+                                catch (HttpRequestException e)
+                                {
+                                    
+                                }
+                            }
+                        }
                     }
                 }
 
-                if (details["posts"].ContainsKey("blogs"))
+                if (details["posts"].ContainsKey("blogs") && details["posts"]["blogs"].Length > 0)
                 {
-                    Words blogPost = new Words(details["posts"]["blogs"][0]["title"], details["posts"]["blogs"][0]["url"], score);
-                    newsList.Add(blogPost);
+                    string title = details["posts"]["blogs"][0]["title"];
+
+                    if (detector.Detect(title) == "en" && details["posts"]["blogs"][0]["url"] != null)
+                    {
+                        var request = new HttpRequestMessage(HttpMethod.Head, details["posts"]["blogs"][0]["url"]);
+                        try
+                        {
+                            var validityResponse = await client.SendAsync(request);
+                            if (validityResponse.IsSuccessStatusCode)
+                            {
+                                Words blogPost = new Words(title, details["posts"]["blogs"][0]["url"], scoreList[counter]);
+                                newsList.Add(blogPost);
+                            }
+                        }
+                        catch (HttpRequestException e)
+                        {
+                            
+                        }
+                    }
                 }
 
-                if (details["posts"].ContainsKey("video"))
+                if (details["posts"].ContainsKey("video") && details["posts"]["video"].Length > 0)
                 {
-                    Words video = new Words(details["posts"]["video"][0]["title"], details["posts"]["video"][0]["url"], score);
-                    newsList.Add(video);
+                    string title = details["posts"]["video"][0]["title"];
+
+                    if (detector.Detect(title) == "en" && details["posts"]["video"][0]["url"] != null)
+                    {
+                        var request = new HttpRequestMessage(HttpMethod.Head, details["posts"]["video"][0]["url"]);
+                        try
+                        {
+                            var validityResponse = await client.SendAsync(request);
+                            if (validityResponse.IsSuccessStatusCode)
+                            {
+                                Words video = new Words(title, details["posts"]["video"][0]["url"], scoreList[counter]);
+                                newsList.Add(video);
+                            }
+                        }
+                        catch (HttpRequestException e)
+                        {
+                            
+                        } 
+                    }
                 }
+                counter++;
             }
-            
+        
             client.Dispose();
-
+        
             return newsList;
         }
     }

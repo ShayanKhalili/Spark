@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="$USER_HOME$/Library/Caches/Rider2017.3/resharper-host/local/Transient/ReSharperHost/v11/SolutionCaches/_Spark.1236467305.00" t="ExcludeRecursive" />
-    <e p="$PROJECT_DIR$" t="IncludeFlat">
+    <e p="C:\Users\Shayan\.Rider2018.3\config\extensions" t="IncludeRecursive" />
+    <e p="C:\Users\Shayan\.Rider2018.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Shayan\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_Spark.865983367.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Shayan\Documents\Work\Spark (Rabbit Hold of Knowledge)" t="IncludeFlat">
       <e p="packages" t="ExcludeRecursive" />
       <e p="Search Engine" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
@@ -15,6 +17,7 @@
         </e>
         <e p="Program.cs" t="Include" />
         <e p="Search Engine.csproj" t="IncludeRecursive" />
+        <e p="Search.txt" t="Include" />
       </e>
       <e p="Spark.sln" t="IncludeFlat" />
     </e>
