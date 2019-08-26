@@ -38,12 +38,24 @@ namespace Search_Engine
         public string title { get; set; }
         public string url { get; set; }
         public int score { get; set; }
+        public WordType type { get; set; }
+        
+        
+        
 
-        public Words(string newsTitle, string newsUrl, int newsScore)
+        public enum WordType
+        {
+            Article,
+            Video,
+            Blog
+        }
+
+        public Words(string newsTitle, string newsUrl, int newsScore, WordType wordType)
         {
             title = newsTitle;
             url = newsUrl;
             score = newsScore;
+            type = wordType;
         }
 
         public static async Task<List<Words>> Search(string searchTerm)
@@ -95,7 +107,7 @@ namespace Search_Engine
                 string altId = papersDict["outputs"][i]["id"].ToString();
                 int score = papersDict["outputs"][i]["score"];
                 scoreList.Add(score);
-                taskList.Add(client.GetStringAsync("https://api.altmetric.com/v1/fetch/id/" + altId + "?key=1e25ee802e58e41ec820679c9ff92b09"));
+                taskList.Add(client.GetStringAsync("https://api.altmetric.com/v1/fetch/id/" + altId + "?key=ef2e9b9961415ba4b6510ec82c3e9cba"));
             }
         
             int counter = 0;
@@ -126,7 +138,7 @@ namespace Search_Engine
                                     var validityResponse = await client.SendAsync(request);
                                     if (validityResponse.IsSuccessStatusCode)
                                     {
-                                        Words newsArticle = new Words(title, details["posts"]["news"][j]["url"], scoreList[counter]);
+                                        Words newsArticle = new Words(title, details["posts"]["news"][j]["url"], scoreList[counter], WordType.Article);
                                         newsList.Add(newsArticle);
                                     }
                                 }
@@ -151,7 +163,7 @@ namespace Search_Engine
                             var validityResponse = await client.SendAsync(request);
                             if (validityResponse.IsSuccessStatusCode)
                             {
-                                Words blogPost = new Words(title, details["posts"]["blogs"][0]["url"], scoreList[counter]);
+                                Words blogPost = new Words(title, details["posts"]["blogs"][0]["url"], scoreList[counter], WordType.Blog);
                                 newsList.Add(blogPost);
                             }
                         }
@@ -174,7 +186,7 @@ namespace Search_Engine
                             var validityResponse = await client.SendAsync(request);
                             if (validityResponse.IsSuccessStatusCode)
                             {
-                                Words video = new Words(title, details["posts"]["video"][0]["url"], scoreList[counter]);
+                                Words video = new Words(title, details["posts"]["video"][0]["url"], scoreList[counter], WordType.Video);
                                 newsList.Add(video);
                             }
                         }

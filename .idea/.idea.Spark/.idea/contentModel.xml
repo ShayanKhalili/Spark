@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\Shayan\.Rider2018.3\config\extensions" t="IncludeRecursive" />
-    <e p="C:\Users\Shayan\.Rider2018.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\Shayan\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_Spark.865983367.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Shayan\.Rider2019.1\config\extensions" t="IncludeRecursive" />
+    <e p="C:\Users\Shayan\.Rider2019.1\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Shayan\.Rider2019.1\system\resharper-host\local\Transient\ReSharperHost\v191\SolutionCaches\_Spark.865983367.00" t="ExcludeRecursive" />
     <e p="C:\Users\Shayan\Documents\Work\Spark (Rabbit Hold of Knowledge)" t="IncludeFlat">
       <e p="packages" t="ExcludeRecursive" />
       <e p="Search Engine" t="IncludeRecursive">
